@@ -1,7 +1,29 @@
-<h2>Add new post</h2>
+<div class="shadow p-3 mb-5 bg-white rounded">
+  <h2><%=@post.title%></h2>
+  <p><span class="border-left"><%=@post.content %></span></p>
+  <p class="text-secondary" style="font-size: 75%">
+    <a href="/post/<%=@post.id%>">#<%=@post.id%></a>
+     | Author: <%=@post.user.name%> 
+     | Comments: <%=@post.comments.count%>
+  </p>
+</div>
 
-<form action="/new" method="POST">
-  <p>Autor:</p>
+<h3>Comments:</h3>
+
+<% @post.comments.each do |comment| %>
+  <div class="border-left">
+    <p><%=comment.content%></p>
+
+    <p class="text-secondary" style="font-size: 75%">
+      #<%=comment.id%>
+       | Author: <%=comment.user.name%> 
+       
+    </p>
+  </div>
+<% end %>
+<hr>
+<form action="/post/<%=@post.id%>" method="POST">
+  <p>Autor comment:</p>
   <div class="row"> 
     <div class="col-sm">
       <div class="input-group mb-3">
@@ -21,15 +43,9 @@
     </div>
   </div>
 
-  <p>Post:</p>
+  <p>Comment:</p>
   <div class="form-group">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Title</span>
-      </div>
-      <input type="text" name="post[title]" value="<%=1%>" placeholder="Type title" aria-label="Title" class="form-control" aria-describedby="basic-addon1">
-    </div>
-    <textarea name="post[content]" class="form-control" placeholder="Type post" rows="12" required></textarea>
+    <textarea name="comment[content]" class="form-control" placeholder="Type comment" rows="4" required></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
